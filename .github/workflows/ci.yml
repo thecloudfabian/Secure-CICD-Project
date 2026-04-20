@@ -5,12 +5,14 @@ on:
     branches: [ main ]
 
 jobs:
-  check:
+  validate:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Check HTML file exists
+      - name: Check HTML exists
         run: test -f index.html
+
+      - name: Basic HTML sanity check
+        run: grep -q "<html" index.html

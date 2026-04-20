@@ -9,10 +9,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Check HTML exists
+      - name: Check HTML file exists
         run: test -f index.html
 
       - name: Basic HTML sanity check
         run: grep -q "<html" index.html
+
+      - name: Scan for secrets (basic)
+        run: |
+          echo "Checking for exposed secrets..."
+          ! grep -r "password" . || exit 1
+          ! grep -r "secret" . || exit 1
